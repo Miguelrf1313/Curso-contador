@@ -1,20 +1,16 @@
-import type { MenuItem as MenuItemType } from "../types";
+import type { MenuItem as Menuitem1 } from "../types/index";
 
-type MenuItemPops = {
-  item: MenuItemType;
+type Menuitems = {
+  item: Menuitem1;
+  addItem: () => void
 };
 
-export const MenuItem = ({ item }: MenuItemPops) => {
-  return (
-    <     button
-      className="border-2 border-teal-400 hover:bg-teal-400  w-full p-3 flex justify-between "
-     
-     > 
-     
-     
-     <p> {item.name} </p>
-     <p className="font-black"> ${item.price} </p>
-     </button>
+export const MenuItem = ({ item, addItem } : Menuitems) => {
  
+  return (
+    <button className="border-2 border-teal-400 hover:bg-teal-400  w-full p-3 flex justify-between" onClick={ () => addItem()  }>
+      <p> {item.name} </p>
+      <p className="font-black"> ${item.price} </p>
+    </button>
   );
 };
