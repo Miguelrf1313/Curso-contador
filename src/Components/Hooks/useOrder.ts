@@ -1,14 +1,40 @@
 import { useState } from "react";
-import type { OrderITem } from "../../types";
+import type { MenuItem, OrderITem } from "../../types";
 
 export const useOrder = () => {
   const [order, setOrder] = useState<OrderITem[]>([]);
+  const [tip, setTip] = useState(0)
 
-  const addItem = () => {
-    console.log("agregando...");
+  const addItem = (item: MenuItem) => {
+    const itemExist = order.find((orderItem) => orderItem.id === item.id);
+
+    if (itemExist) {
+      const updateOrder = order.map((orderItem) =>
+        orderItem.id === item.id
+          ? { ...orderItem, quantity: orderItem.quantity + 1 }
+          : orderItem
+      );
+      setOrder(updateOrder);
+    } else {
+      const newItem: OrderITem = { ...item, quantity: 1 };
+      setOrder([...order, newItem]);
+    }
+  };
+  const removeItem = (id: MenuItem["id"]) => {
+    setOrder(order.filter((item) => item.id !== id));
   };
 
+  const placeOrder = () => {
+    setTip(0)
+    setOrder([])
+  }
+
   return {
+    tip,
+    setTip,
+    removeItem,
+    placeOrder,
+    order,
     addItem,
   };
 };
